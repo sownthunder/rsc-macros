@@ -9,6 +9,7 @@ FishyFish.py
 """
 
 # import the goodies
+import glob # to get list of file names as images for screenshots to know wher to click
 import pyautogui
 import tkinter as tk
 from tkinter import filedialog
@@ -44,7 +45,20 @@ def testFish():
 def alphaRun():
     # take screen shot and save to C drive
     pyautogui.screenshot('c:\\temp\\screenshot_example.png')
-    x = 2
+    # where (location) the program can find our scrreenshot image
+    #pyautogui.locateOnScreen(r'c:\temp\outbound\calc7key.png')
+    ### <--- DO LOOPS AND CHECK UNTIL THAT PICTURE "is found"
+    print (str(pyautogui.locateOnScreen(r'c:\temp\fish1.png')))
+    return
+
+def importImageSelection():
+
+    app.imageSelect = filedialog.askopenfilename(initialdir = "C:\"", title="import IMAGE select", filetypes=(("png files", "*.png"), ("jpeg files", "*.jpeg"), ("all files", "*.*")))
+    imageSelectLocation = str(app.imageSelect)
+    # set variable above to tk.string
+    imageSelectLocationText.set(imageSelectLocation)
+    # take from tk.string and set it to search for that screenshot
+    print (str(pyautogui.screenshot(imageSelectLocationText.get())))
     return
 
 app = tk.Tk()
@@ -54,8 +68,17 @@ app.geometry('400x400+200+200')
 buttonBeginFish = tk.Button(app, text="So Long and Thanks for All the Fish", width=50, command=testFish)
 buttonBeginFish.pack()
 
+## INCLUDE BUTTON FOR 'AUTO' AND 'MANUAL' FOR FISHING SPOTS
 buttonAlphaRun = tk.Button(app, text="Alpha RUN", width =20, command=alphaRun)
 buttonAlphaRun.pack()
+
+buttonImageSelectCheck1 = tk.Button(text="select image file to scan as fishing spot ", width=90, command=importImageSelection)
+buttonImageSelectCheck1.place(x=35, y=150)
+
+imageSelectLocationText = tk.StringVar()
+imageSelectLocationText.set("")
+label = tk.Label(app, textvariable=imageSelectLocationText)
+label.place(x=35, y=200)
 
 app.config()
 app.mainloop()
