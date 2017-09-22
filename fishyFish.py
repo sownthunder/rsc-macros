@@ -48,7 +48,16 @@ def alphaRun():
     # where (location) the program can find our scrreenshot image
     #pyautogui.locateOnScreen(r'c:\temp\outbound\calc7key.png')
     ### <--- DO LOOPS AND CHECK UNTIL THAT PICTURE "is found"
-    print (str(pyautogui.locateOnScreen(r'c:\temp\fish1.png')))
+    print (str(pyautogui.locateOnScreen(r'c:\temp\fish2.png')))
+    # attempt to right click screen and look for fishing spot
+    pyautogui.alert('you have 2.5 seconds to move mouse to fishing position')
+    pyautogui.PAUSE = 2.5
+    pyautogui.click(button='right')
+    pyautogui.moveRel(10, 0, duration=1)
+    # AUTO CLICK FOR 20 NOW BUT SET TO DEPEND ON USER INPUT
+    pyautogui.click(clicks=20, interval=2, button='left')
+    # take screenie of "fishing spot"?
+    #pyautogui.screenshot('c:\\temp\\rightClickFish.png')
     return
 
 def importImageSelection():
@@ -58,8 +67,13 @@ def importImageSelection():
     # set variable above to tk.string
     imageSelectLocationText.set(imageSelectLocation)
     # take from tk.string and set it to search for that screenshot
-    print (str(pyautogui.screenshot(imageSelectLocationText.get())))
+    print (str(pyautogui.locateOnScreen(imageSelectLocationText.get())))
     return
+
+def sel():
+   selection = "Value = " + str(var.get())
+   label.config(text = selection)
+
 
 app = tk.Tk()
 app.title('FishyFish.exe')
@@ -72,13 +86,18 @@ buttonBeginFish.pack()
 buttonAlphaRun = tk.Button(app, text="Alpha RUN", width =20, command=alphaRun)
 buttonAlphaRun.pack()
 
-buttonImageSelectCheck1 = tk.Button(text="select image file to scan as fishing spot ", width=90, command=importImageSelection)
+buttonImageSelectCheck1 = tk.Button(text="select image file to scan as fishing spot ", width=35, command=importImageSelection)
 buttonImageSelectCheck1.place(x=35, y=150)
 
 imageSelectLocationText = tk.StringVar()
 imageSelectLocationText.set("")
-label = tk.Label(app, textvariable=imageSelectLocationText)
-label.place(x=35, y=200)
+label1 = tk.Label(app, textvariable=imageSelectLocationText)
+label1.place(x=35, y=200)
+
+selectionOneText = tk.StringVar()
+selectionOneText.set("Direction of land (screen/not compass)")
+label2 = tk.Label(app, textvariable=selectionOneText)
+label2.place(x=35, y=250)
 
 app.config()
 app.mainloop()
