@@ -10,10 +10,13 @@ FishyFish.py
 
 # import the goodies
 import glob # to get list of file names as images for screenshots to know wher to click
+import time
 import pyautogui
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
+
+global start, end
 
 # get/set screen resolution
 width, height = pyautogui.size()
@@ -43,6 +46,11 @@ def testFish():
     return
 
 def alphaRun():
+    # start timer?
+    start = time.time()
+    print ('hello')
+    end = time.time()
+    print (end - start)
     # take screen shot and save to C drive
     pyautogui.screenshot('c:\\temp\\screenshot_example.png')
     # where (location) the program can find our scrreenshot image
@@ -55,7 +63,7 @@ def alphaRun():
     pyautogui.click(button='right')
     pyautogui.moveRel(10, 0, duration=1)
     # AUTO CLICK FOR 20 NOW BUT SET TO DEPEND ON USER INPUT
-    pyautogui.click(clicks=20, interval=2, button='left')
+    pyautogui.click(clicks=80, interval=2, button='left')
     # take screenie of "fishing spot"?
     #pyautogui.screenshot('c:\\temp\\rightClickFish.png')
     return
@@ -85,6 +93,16 @@ buttonBeginFish.pack()
 ## INCLUDE BUTTON FOR 'AUTO' AND 'MANUAL' FOR FISHING SPOTS
 buttonAlphaRun = tk.Button(app, text="Alpha RUN", width =20, command=alphaRun)
 buttonAlphaRun.pack()
+
+labelClickNumberText = tk.StringVar()
+labelClickNumberText.set("Number of auto-clicks: ")
+
+label3 = tk.Label(app, textvariable=labelClickNumberText)
+label3.place(x=35, y=100)
+
+spinBoxNum = tk.StringVar()
+s = tk.Spinbox(app, from_ = 1, to = 250, textvariable=spinBoxNum)
+s.place(x=65, y=100)
 
 buttonImageSelectCheck1 = tk.Button(text="select image file to scan as fishing spot ", width=35, command=importImageSelection)
 buttonImageSelectCheck1.place(x=35, y=150)
